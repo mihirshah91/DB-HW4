@@ -82,7 +82,7 @@ public class UpdateJobRunner
 
         Job initJob = null;
 		try {
-			initJob = createUpdateJob(i,inputDirectory, "file"+i);
+			initJob = createUpdateJob(i,inputDirectory, "output/file"+i);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -121,7 +121,7 @@ public static ArrayList<Point> copyCentroids()
     for(int i=0;i<KMeans.centroids.size();i++)
     {
     	//System.out.println("i="+i);
-    	//System.out.println("cen="+KMeans.centroids.get(i).toString());
+    	System.out.println("cen="+KMeans.centroids.get(i).toString());
     	temp.add(i, KMeans.centroids.get(i));
     }
     return temp;

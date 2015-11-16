@@ -22,7 +22,12 @@ public class Point implements WritableComparable  {
      */
 	//List<Float> x =new ArrayList<Float>();
 	float coridnates[];
-	
+    
+    public Point()
+    {
+        
+    }
+
     public Point(int dim)
     {
     	coridnates=new float[dim];
@@ -91,6 +96,7 @@ public class Point implements WritableComparable  {
      */
     public int compareTo(Object o)
     {   
+    	System.out.println("inside comparator");
         
         return 0;
     }
@@ -146,12 +152,25 @@ public class Point implements WritableComparable  {
 	@Override
 	public void readFields(DataInput arg0) throws IOException {
 		// TODO Auto-generated method stub
-		
+        System.out.println("inside read");
+        System.out.println("length=");
+        coridnates=new float[4];
+        //System.out.println("yes="+coridnates.length);
+        for(int i=0;i < 4;i++)
+        {
+        		System.out.println("inside for loop");
+        		coridnates[i]=arg0.readFloat();
+        }
 	}
 
 	@Override
 	public void write(DataOutput arg0) throws IOException {
 		// TODO Auto-generated method stub
 		
+		System.out.println("inside write");
+		for (int j=0;j<coridnates.length;j++)
+			arg0.writeFloat(coridnates[j]);
+
+
 	}
 }

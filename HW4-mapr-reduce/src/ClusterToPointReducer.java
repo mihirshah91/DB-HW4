@@ -37,7 +37,7 @@ public class ClusterToPointReducer extends Reducer<Text, Text, Text, Text>
             }
             System.out.println("New centroid is :"+ new_centroid);
             System.out.println("===========================");
-            KMeans.centroids.set(counter, new_centroid);
+            KMeans.centroids.set(position, new_centroid);
             this.counter++;
             context.write(new Text(new_centroid.toString()), new Text(Integer.toString(counter)));
           
@@ -46,9 +46,12 @@ public class ClusterToPointReducer extends Reducer<Text, Text, Text, Text>
         public static int findPosition(Text key)
         {
         	Point searchPoint= new Point(key.toString());
+            float distance=0;
         	for (int i=0;i< UpdateJobRunner.centroids_old.size();i++)
         	{
-        		
+        		distance= Point.distance(searchPoint,UpdateJobRunner.centroids_old.get(i));
+                if (distance == 0.0)
+                    return i;
         		
         	}
         	return 0;

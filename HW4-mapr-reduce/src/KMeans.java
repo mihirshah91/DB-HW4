@@ -78,6 +78,8 @@ public class KMeans {
         public void map(Text key, Text value, Context context)
             throws IOException, InterruptedException
         {
+            System.out.println("inside file job mapper");
+
             Point p = new Point(key.toString());    
             assertTrue(p.getDimension() == dimension, "Invalid Dimension");
             // Map all the points to the same key, so reducer can find centroids
@@ -99,6 +101,7 @@ public class KMeans {
         {
             ArrayList<Point> pts = new ArrayList<Point>();
             int counter = 0;
+            System.out.println("inside file reducer");
             for (Point p : values)
             {
                 pts.add(new Point(p));
@@ -112,6 +115,7 @@ public class KMeans {
             Collections.shuffle(pts, rng);
             for (int i = 0; i < k; ++i)
             {
+                System.out.println("centroid number :"+ pts.get(i));
                 centroids.set(i, pts.get(i));
             }
         }
@@ -124,6 +128,7 @@ public class KMeans {
     public static Job createInitializationJob(String inputDirectory, String outputDirectory)
         throws IOException
     {
+        System.out.println("inside job creator");
         Job init_job = new Job(new Configuration(), "kmeans_init");
         init_job.setJarByClass(KMeans.class);
         init_job.setMapperClass(FileMapper.class);
@@ -219,6 +224,7 @@ public class KMeans {
 
         if (!centroidsFromFile)
         {
+            System.out.println("inside random");
             Job initJob = createInitializationJob(inputDirectory, outputDirectory);
             initJob.waitForCompletion(true);
         }
